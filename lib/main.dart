@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(QuestionApp());
 
-class QuestionApp extends StatelessWidget {
+class QuestionAppState extends State<QuestionApp> {
+  var questionIndex = 0;
+
+  void answerQuestion() {
+    setState(() {
+      questionIndex++;
+    });
+    
+    print(questionIndex);
+  }
+  
   @override
   Widget build(BuildContext context) {
     final List<String> questions = [
@@ -17,22 +27,28 @@ class QuestionApp extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text(questions.elementAt(0)),
+            Text(questions[questionIndex]),
             ElevatedButton(
               child: Text('Resposta 1'),
-              onPressed: null,
+              onPressed: answerQuestion,
             ),
             ElevatedButton(
               child: Text('Resposta 2'),
-              onPressed: null,
+              onPressed: answerQuestion,
             ),
             ElevatedButton(
               child: Text('Resposta 3'),
-              onPressed: null,
+              onPressed: answerQuestion,
             )
           ],
         ),
       )
     );
+  }
+}
+
+class QuestionApp extends StatefulWidget {
+  QuestionAppState createState() {
+    return QuestionAppState();
   }
 }
