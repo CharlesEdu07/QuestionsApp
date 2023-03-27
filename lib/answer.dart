@@ -8,8 +8,12 @@ class Answer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: null,
-      child: Text(text),
+      onPressed: () => {},
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+      ),
+      child: Text(text)
     );
   }
 }
