@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './question.dart';
 import './answer.dart';
+import './result.dart';
 
 void main() => runApp(QuestionApp());
 
@@ -22,27 +23,37 @@ class _QuestionAppState extends State<QuestionApp> {
     ];
 
   void _answerQuestion() {
-    setState(() {
-      _questionIndex++;
-    });
+    if (hasQuestion) {
+      setState(() {
+        _questionIndex++;
+      });
+    }
+  }
+
+  bool get hasQuestion {
+    return _questionIndex < _questions.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> answers = _questions[_questionIndex].cast()["answers"];
+    List<String> answers = hasQuestion
+      ? _questions[_questionIndex].cast()["answers"]
+      : [];
 
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('App de Perguntas'),
+          title: const Text('App de Perguntas'),
         ),
-        body: Column(
+        body: hasQuestion ? Column(
           children: [
             Question(_questions[_questionIndex]["text"].toString()),
             ...answers.map((answer) => Answer(answer, _answerQuestion))
             .toList(),
           ],
-        ),
+        ) : Result(
+          text: "Finalizado!"
+        ), 
       )
     );
   }
