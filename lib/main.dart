@@ -6,21 +6,30 @@ void main() => runApp(QuestionApp());
 
 class _QuestionAppState extends State<QuestionApp> {
   var _questionIndex = 0;
+  final List _questions = const [
+      {
+        "text": "Qual é a sua cor favorita?",
+        "answers": ["Preto", "Vermelho", "Verde", "Branco"],
+      },
+      {
+        "text": "Qual é o seu animal favorito?",
+        "answers": ["Cachorro", "Gato", "Papagaio", "Peixe"],
+      },
+      {
+        "text": "Qual é a sua fruta favorita?",
+        "answers": ["Maçã", "Banana", "Laranja", "Uva"],
+      }
+    ];
 
   void _answerQuestion() {
     setState(() {
       _questionIndex++;
     });
-    
-    print(_questionIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<String> questions = [
-      'Qual é a sua cor favorita?',
-      'Qual é o seu animal favorito?'
-    ];
+    List<String> answers = _questions[_questionIndex].cast()["answers"];
 
     return MaterialApp(
       home: Scaffold(
@@ -29,10 +38,9 @@ class _QuestionAppState extends State<QuestionApp> {
         ),
         body: Column(
           children: [
-            Question(questions[_questionIndex]),
-            Answer("Resposta 1", _answerQuestion),
-            Answer("Resposta 2", _answerQuestion),
-            Answer("Resposta 3", _answerQuestion),
+            Question(_questions[_questionIndex]["text"].toString()),
+            ...answers.map((answer) => Answer(answer, _answerQuestion))
+            .toList(),
           ],
         ),
       )
