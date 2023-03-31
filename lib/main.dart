@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import './questionnaire.dart';
 import './result.dart';
 
 void main() => runApp(QuestionApp());
 
 class _QuestionAppState extends State<QuestionApp> {
   var _questionIndex = 0;
-  final List _questions = const [
+  final List<Map<String, Object>> _questions = const [
       {
         "text": "Qual é a sua cor favorita?",
         "answers": ["Preto", "Vermelho", "Verde", "Branco"],
@@ -20,7 +19,11 @@ class _QuestionAppState extends State<QuestionApp> {
         "text": "Qual é a sua fruta favorita?",
         "answers": ["Maçã", "Banana", "Laranja", "Uva"],
       }
-    ];
+  ];
+
+  bool get hasQuestion {
+    return _questionIndex < _questions.length;
+  }
 
   void _answerQuestion() {
     if (hasQuestion) {
@@ -30,27 +33,17 @@ class _QuestionAppState extends State<QuestionApp> {
     }
   }
 
-  bool get hasQuestion {
-    return _questionIndex < _questions.length;
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<String> answers = hasQuestion
-      ? _questions[_questionIndex].cast()["answers"]
-      : [];
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('App de Perguntas'),
         ),
-        body: hasQuestion ? Column(
-          children: [
-            Question(_questions[_questionIndex]["text"].toString()),
-            ...answers.map((answer) => Answer(answer, _answerQuestion))
-            .toList(),
-          ],
+        body: hasQuestion ? Questionnaire(
+          questionIndex: _questionIndex,
+          questions: _questions,
+          answer: _answerQuestion,
         ) : Result(
           text: "Finalizado!"
         ), 
