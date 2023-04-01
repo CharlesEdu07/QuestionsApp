@@ -50,6 +50,13 @@ class _QuestionAppState extends State<QuestionApp> {
     }
   }
 
+  void restart() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,6 +71,7 @@ class _QuestionAppState extends State<QuestionApp> {
         ) : Result(
           text: "Finalizado!",
           totalScore: _totalScore,
+          restart: restart,
         ), 
       )
     );

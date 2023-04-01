@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class Result extends StatelessWidget {
   final String text;
   final int totalScore;
+  void Function() restart;
 
-  Result({required this.text, required this.totalScore});
+  Result({
+    required this.text, 
+    required this.totalScore,
+    required this.restart,
+  });
 
   String get resultPhrase {
     String resultText = 'Você fez $totalScore pontos!';
@@ -22,13 +27,28 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        resultPhrase,
-        style: TextStyle(
-          fontSize: 28,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            resultPhrase,
+            style: TextStyle(
+              fontSize: 28,
+            ),
+          ),
         ),
-      ),
+        TextButton(
+          onPressed: restart,
+          child: Text(
+            'Reiniciar?',
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 18,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
