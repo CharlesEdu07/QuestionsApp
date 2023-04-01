@@ -62,7 +62,8 @@ class _QuestionAppState extends State<QuestionApp> {
           questions: _questions,
           onClicked: _answerQuestion,
         ) : Result(
-          text: "Finalizado!"
+          text: "Finalizado!",
+          totalScore: _totalScore,
         ), 
       )
     );
