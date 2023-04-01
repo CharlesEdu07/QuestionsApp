@@ -6,18 +6,34 @@ void main() => runApp(QuestionApp());
 
 class _QuestionAppState extends State<QuestionApp> {
   var _questionIndex = 0;
+  var _totalScore = 0;
   final List<Map<String, Object>> _questions = const [
       {
         "text": "Qual é a sua cor favorita?",
-        "answers": ["Preto", "Vermelho", "Verde", "Branco"],
+        "answers": [
+          {"text": "Preto", "score": 10},
+          {"text": "Vermelho", "score": 5},
+          {"text": "Verde", "score": 3},
+          {"text": "Branco", "score": 1},
+        ],
       },
       {
         "text": "Qual é o seu animal favorito?",
-        "answers": ["Cachorro", "Gato", "Papagaio", "Peixe"],
+        "answers": [
+          {"text": "Cachorro", "score": 10},
+          {"text": "Gato", "score": 5},
+          {"text": "Papagaio", "score": 3},
+          {"text": "Peixe", "score": 1},
+        ],
       },
       {
         "text": "Qual é a sua fruta favorita?",
-        "answers": ["Maçã", "Banana", "Laranja", "Uva"],
+        "answers": [
+          {"text": "Maçã", "score": 10},
+          {"text": "Banana", "score": 5},
+          {"text": "Laranja", "score": 3},
+          {"text": "Uva", "score": 1},
+        ],
       }
   ];
 
@@ -25,10 +41,11 @@ class _QuestionAppState extends State<QuestionApp> {
     return _questionIndex < _questions.length;
   }
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
     if (hasQuestion) {
       setState(() {
         _questionIndex++;
+        _totalScore += score;
       });
     }
   }
@@ -43,7 +60,7 @@ class _QuestionAppState extends State<QuestionApp> {
         body: hasQuestion ? Questionnaire(
           questionIndex: _questionIndex,
           questions: _questions,
-          answer: _answerQuestion,
+          onClicked: _answerQuestion,
         ) : Result(
           text: "Finalizado!"
         ), 

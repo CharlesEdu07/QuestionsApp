@@ -6,12 +6,12 @@ import './question.dart';
 class Questionnaire extends StatelessWidget {
   final int questionIndex;
   final List<Map<String, Object>> questions;
-  final void Function() answer;
+  final void Function(int) onClicked;
 
   Questionnaire({
     required this.questionIndex,
     required this.questions,
-    required this.answer,
+    required this.onClicked,
   });
 
   bool get hasQuestion {
@@ -20,15 +20,20 @@ class Questionnaire extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> answers = hasQuestion
+    List<Map<String, Object>> answers = hasQuestion
       ? questions[questionIndex].cast()["answers"]
+      as List<Map<String, Object>>
       : [];
 
     return Column(
       children: [
         Question(questions[questionIndex]["text"].toString()),
-        ...answers.map((answer) => Answer(answer, this.answer))
-        .toList(),
+        ...answers.map((ans) {
+          return Answer(
+            ans["text"].toString(),
+            () => onClicked(int.parse(ans["score"].toString())),
+          );
+        }).toList(),
       ],
     );
   }
